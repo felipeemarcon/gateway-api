@@ -36,7 +36,7 @@ app.get("/serie/:id", async function(req, res) {
 
     res.send(resApi.data);
   } catch (err) {
-    res.status(404).send(err.response.data);
+    res.status(err.response.data.statusCode).send(err.response.data);
     console.error(err);
   }
 });
@@ -65,7 +65,7 @@ app.get("/current/:id", async function(req, res) {
 
     res.send(resApi.data);
   } catch (err) {
-    res.status(404).send(err.response.data);
+    res.status(err.response.data.statusCode).send(err.response.data);
     console.error(err);
   }
 });
@@ -80,6 +80,7 @@ app.get("/search", async function(req, res) {
       res.send(resApi.data);
     }
   } catch (err) {
+    res.status(err.response.data.statusCode).send(err.response.data);
     console.error(err);
   }
 });
