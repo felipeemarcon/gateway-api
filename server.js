@@ -6,12 +6,12 @@ app.use(cors());
 
 const axios = require("axios");
 const api = axios.create({
-  baseURL: "http://dev.gamersclub.com.br"
+  baseURL: process.env.API_BASE_URL
 });
 
-app.get("/init", async function(req, res) {
+app.get("/path", async function(req, res) {
   try {
-    const resApi = await api.get("/api/gamesacademy/init");
+    const resApi = await api.get("/path");
 
     res.send(resApi.data);
   } catch (err) {
@@ -19,9 +19,9 @@ app.get("/init", async function(req, res) {
   }
 });
 
-app.get("/home", async function(req, res) {
+app.get("/path", async function(req, res) {
   try {
-    const resApi = await api.get("/api/gamesacademy/home");
+    const resApi = await api.get("/path");
 
     res.send(resApi.data);
   } catch (err) {
@@ -29,10 +29,10 @@ app.get("/home", async function(req, res) {
   }
 });
 
-app.get("/serie/:id", async function(req, res) {
+app.get("/path/:id", async function(req, res) {
   try {
-    const serieId = req.params.id;
-    const resApi = await api.get(`/api/gamesacademy/serie/${serieId}`);
+    const id = req.params.id;
+    const resApi = await api.get(`/path/${id}`);
 
     res.send(resApi.data);
   } catch (err) {
@@ -41,15 +41,15 @@ app.get("/serie/:id", async function(req, res) {
   }
 });
 
-app.get("/episodes/:page?", async function(req, res) {
+app.get("/path/:page?", async function(req, res) {
   try {
     const page = req.params.page;
     let resApi;
 
     if (page) {
-      resApi = await api.get(`/api/gamesacademy/episodes/${page}`);
+      resApi = await api.get(`/path/${page}`);
     } else {
-      resApi = await api.get("/api/gamesacademy/episodes");
+      resApi = await api.get("/path");
     }
 
     res.send(resApi.data);
@@ -58,10 +58,10 @@ app.get("/episodes/:page?", async function(req, res) {
   }
 });
 
-app.get("/current/:id", async function(req, res) {
+app.get("/path/:id", async function(req, res) {
   try {
-    const lessonId = req.params.id;
-    const resApi = await api.get(`/api/gamesacademy/current/${lessonId}`);
+    const id = req.params.id;
+    const resApi = await api.get(`/path/${id}`);
 
     res.send(resApi.data);
   } catch (err) {
@@ -76,7 +76,7 @@ app.get("/search", async function(req, res) {
     if (params == undefined || params == "") {
       res.status(400).send("No search");
     } else {
-      resApi = await api.get(`/api/gamesacademy/search?q=${params}`);
+      resApi = await api.get(`/search?q=${params}`);
       res.send(resApi.data);
     }
   } catch (err) {
@@ -85,23 +85,9 @@ app.get("/search", async function(req, res) {
   }
 });
 
-app.get("/search", async function(req, res) {
+app.get("/user", async function(req, res) {
   try {
-    const params = req.query.q;
-    if (params == undefined || params == "") {
-      res.status(400).send("No search");
-    } else {
-      resApi = await api.get(`/api/gamesacademy/search?q=${params}`);
-      res.send(resApi.data);
-    }
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-app.get("/playerInfo", async function(req, res) {
-  try {
-    const resApi = await api.get("/api/playerinfo");
+    const resApi = await api.get("/api/user");
 
     res.send(resApi.data);
   } catch (err) {
